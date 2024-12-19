@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Form Inserisci/Aggiorna Appuntamento</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+}
+
+.form-container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+	margin-bottom: 20px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 700;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.form-group textarea {
+	resize: vertical;
+}
+
+.form-group button {
+	width: 100%;
+	padding: 10px;
+	background-color: #007BFF;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.form-group button:hover {
+	background-color: #0056b3;
+}
+
+.title {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.h2 {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+.h3 {
+	font-size: 1.7rem;
+	font-weight: bold;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<div class="flex">
+		<div th:replace="~{indexAdmin :: nav}"></div>
+		<main class="w-5/6 content">
+			<div th:replace="~{indexAdmin :: h1}"></div>
+			<br>
+			<div class="container mx-auto">
+				<div class="text-center">
+					<h2 class="h2">
+						<span th:if="${venga=='aggiorna'}">AGGIORNA APPUNTAMENTO</span> <span
+							th:if="${venga=='inserisci'}">INSERISCI APPUNTAMENTO</span>
+					</h2>
+				</div>
+				<div class="overflow-x-auto">
+					<div style="font-size: 2rem; color: green" th:if="${mex != null}"
+						th:text="${mex}"></div>
+					<div style="font-size: 2rem; color: red"
+						th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+					<br> <br>
+					<div class="container mx-auto w-full md:w-3/4 lg:w-2/3">
+						<form id="appuntamentoForm"
+							th:action="@{/appuntamento/inserisciAppuntamento(venga=${venga=='aggiorna' ? 'aggiorna' : 'inserisci'}, id=${appuntamento.id})}"
+							method="post" th:object="${appuntamento}">
+							<div class="flex justify-center items-center">
+							<div class="form-group  w-1/6" >
+								<label for="data" class="h3">Data</label> <input type="date"
+									id="data" name="data" th:field="*{data}"
+									th:value="${appuntamento.data}" required>
+							</div></div>
+							<div class="flex justify-center items-center">
+							<div class="form-group  w-1/6" >
+								<label for="ora" class="h3">Ora</label> <select id="ora"
+									name="ora" th:field="*{orario}" class="form-control">
+									<!-- Se orario è nullo o non corrisponde, mostra l'opzione di default -->
+									<option value="" th:selected="${appuntamento.orario == null}">Seleziona
+										un orario</option>
+
+									<!-- Per ogni orario disponibile, seleziona l'orario corrispondente -->
+									<option th:each="orar : ${orariDisponibili}" th:value="${orar}"
+										th:text="${orar}" th:selected="${orar == appuntamento.orario}"></option>
+								</select>
+							</div></div>
+							<div class="flex justify-center items-center">
+							<div class="form-group  w-1/2" >
+								<label for="cliente" class="h3">Cliente</label> <input
+									type="text" name="query" id="searchInput_formAppuntamento"
+									placeholder="Cerca cliente..." class="px-2 py-1 border rounded"
+									oninput="ricercaClienti('formAppuntamento')" required>
+								<input type="hidden" name="clienteId1"
+									id="clienteId_formAppuntamento" th:value="${clienteId}" /> <input
+									type="hidden" id="vengoMode" th:value="${venga}" />
+								<div id="suggestionsContainer_formAppuntamento"
+									class="absolute z-10 bg-black border rounded shadow-md hidden"></div>
+							</div></div>
+								<div class="flex justify-center items-center">
+							<div class="form-group  w-1/2" >
+								<label for="operatore" class="h3">Operatore</label> <input
+									type="text" name="query1" id="searchInput1_formAppuntamento"
+									placeholder="Cerca operatore..."
+									class="px-2 py-1 border rounded"
+									oninput="ricercaOperatori('formAppuntamento')" required>
+								<input type="hidden" name="operatoreId"
+									id="operatoreId_formAppuntamento" th:value="${operatoreId}">
+								<input type="hidden" id="vengoMode1" th:value="${venga}" />
+								<div id="suggestionsContainer1_formAppuntamento"
+									class="absolute z-10 bg-black border rounded shadow-md hidden"></div>
+							</div></div>
+							<div class="form-group">
+								<label class="h3">Servizi</label>
+								<div class="row row-cols-1 row-cols-md-5 g-4">
+									<!-- Grid layout con 3 colonne -->
+									<div class="col" th:each="servizio : ${serviziDisponibili}">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox"
+												th:id="${'servizio-' + servizio.id}" th:name="servizi"
+												th:value="${servizio.id}"
+												th:checked="${servizi != null and servizi.contains(servizio)}">
+											<label class="form-check-label"
+												th:for="${'servizio-' + servizio.id}"
+												th:text="${servizio.nome}"></label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+								<div class="flex justify-center items-center">
+								<div class="form-group w-1/6">
+								<button type="submit" class="h3">CONFERMA</button>
+							</div></div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<script src="/js/script.js"></script>
+</body>
+</html>

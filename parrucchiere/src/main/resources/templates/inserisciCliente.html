@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Form Inserisci/Aggiorna Cliente</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	
+}
+
+.form-container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+	margin-bottom: 20px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 700;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.form-group textarea {
+	resize: vertical;
+}
+
+.form-group button {
+	width: 100%;
+	padding: 10px;
+	background-color: #007BFF;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.form-group button:hover {
+	background-color: #0056b3;
+}
+
+.title {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.h2 {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+.h3 {
+	font-size: 1.7rem;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<div class="flex">
+		<div th:replace="~{indexAdmin :: nav}"></div>
+		<main class="w-5/6 content">
+			<div th:replace="~{indexAdmin :: h1}"></div>
+
+			<div class="container mx-auto">
+				<div class="text-center">
+					<h2 class="h2">
+						<span th:if="${vengo=='aggiorna'}">AGGIORNA CLIENTE</span> <span
+							th:if="${vengo=='inserisci'}">INSERISCI CLIENTE</span>
+					</h2>
+				</div>
+				<div class="overflow-x-auto">
+					<div style="font-size: 2rem; color: green" th:if="${mex != null}"
+						th:text="${mex}"></div>
+					<div style="font-size: 2rem; color: red"
+						th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+					<br> <br>
+					<div class="container mx-auto w-full md:w-3/4 lg:w-2/3">
+					<form th:action="@{/cliente/inserisciCliente(vengo=${vengo=='aggiorna' ? 'aggiorna' : 'inserisci'}, id=${cliente.id})}" method="post"
+						th:object="${cliente}">
+						<div class="form-group">
+							<label for="nome" class="h3">Nome</label> <input type="text" id="nome"
+								name="nome" th:field="*{nome}" th:value="${cliente.ddn}" required>
+						</div>
+						<div class="form-group">
+							<label for="cognome" class="h3">Cognome</label> <input type="text"
+								id="cognome" name="cognome" th:field="*{cognome}" th:value="${cliente.ddn}" required>
+						</div>
+						<div class="form-group">
+							<label for="ddn" class="h3">Data di Nascita</label> <input type="date"
+								id="ddn" name="ddn" th:field="*{ddn}" th:value="${cliente.ddn}">
+						</div>
+						<div class="form-group">
+							<label for="email" class="h3">Email</label> <input type="email" id="email"
+								name="email" th:field="*{email}" th:value="${cliente.ddn}">
+						</div>
+						<div class="form-group">
+							<label for="telefono" class="h3">Telefono</label> <input type="text"
+								id="telefono" name="telefono" th:field="*{telefono}"
+								pattern="[0-9]+" th:value="${cliente.ddn}" required>
+						</div>
+						<div class="form-group">
+							<label for="scheda" class="h3">Scheda</label>
+							<textarea id="scheda" name="scheda" rows="5" th:field="*{scheda}" th:value="${cliente.ddn}"></textarea>
+						</div>
+						<div class="form-group">
+							<button type="submit"  class="h3">CONFERMA</button>
+						</div>
+					</form>
+
+				</div>
+			</div></div>
+		</main>
+	</div>
+  <script src="/js/script.js"></script>
+</body>
+</html>

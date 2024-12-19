@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Elenco Ricevute</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/style.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+}
+
+.title {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.h2 {
+	font-size: 2.5rem;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px  #800000;
+}
+
+.container {
+	max-width: 100% !important; /* Rimuove il limite */
+	width: 100%; /* Assicura che la larghezza si estenda */
+}
+
+th, td {
+	padding: 0.5rem; /* Uniforma il padding */
+	border: 1px solid #ddd; /* Uniforma il bordo */
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<div class="flex">
+		<div th:replace="~{indexAdmin :: nav}"></div>
+		<main class="w-full content">
+			<div th:replace="~{indexAdmin :: h1}"></div>
+
+			<div class="container mx-auto w-full">
+				<div class="text-center">
+					<h2 class="h2">TERMOMETRO</h2>
+				</div>
+				<div class="overflow-x-auto w-full">
+					<div style="font-size: 2rem; color: green" th:if="${mex != null}"
+						th:text="${mex}"></div>
+					<div style="font-size: 2rem; color: red"
+						th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+					<br> <br>
+
+					<table class="w-full bg-white border border-gray-200">
+						<thead>
+							<tr style="font-size: 1.5rem">
+								<th class="py-1 px-1 border-b">Mese</th>
+								<!-- Ciclo per inserire le chiavi come header -->
+								<th th:each="nome : ${nomeServizi}" th:text="${nome + ' - %'}"
+									class="py-1 px-1 border-b text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="month : ${#numbers.sequence(13, 1, -1)}"
+								style="font-size: 1.3rem">
+								<th><th:block th:switch="${month}">
+										<th:block th:case="13">TOTALE</th:block>
+										<th:block th:case="1">Gennaio</th:block>
+										<th:block th:case="2">Febbraio</th:block>
+										<th:block th:case="3">Marzo</th:block>
+										<th:block th:case="4">Aprile</th:block>
+										<th:block th:case="5">Maggio</th:block>
+										<th:block th:case="6">Giugno</th:block>
+										<th:block th:case="7">Luglio</th:block>
+										<th:block th:case="8">Agosto</th:block>
+										<th:block th:case="9">Settembre</th:block>
+										<th:block th:case="10">Ottobre</th:block>
+										<th:block th:case="11">Novembre</th:block>
+										<th:block th:case="12">Dicembre</th:block>
+									</th:block></th>
+
+								<td th:each="index : ${#numbers.sequence(0, 4)}"
+									class="py-2 px-4 border-b text-center"><th:block
+										th:with="datiServizio=${mappaServizi.get(month)}">
+										<th:block
+											th:if="${datiServizio != null and !datiServizio.isEmpty()}">
+											<span th:classappend="${datiServizio.get(index).colore}"
+												th:text="${datiServizio.get(index).valore + ' - ' + datiServizio.get(index).percentuale + '%'}"></span>
+										</th:block>
+									</th:block></td>
+							</tr>
+						</tbody>
+					</table>
+					<hr>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="/js/script.js"></script>
+</body>
+</html>

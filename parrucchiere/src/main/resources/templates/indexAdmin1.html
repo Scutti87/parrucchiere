@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+</head>
+<body>
+
+	<div class="flex">
+		<nav th:fragment="nav" class="w-1/6 sidebar">
+			<div class="sticky top-0">
+				<ul class="space-y-5">
+					<li><a class="flex items-center space-x-2" th:href="@{/}">
+							<i class="fas fa-home"></i> <span class="testonav">Home</span>
+					</a></li>
+					<li><a class="flex items-center space-x-2 cursor-pointer"
+						onclick="toggleSubmenu('clientiSubmenu')"> <i
+							class="fas fa-users"></i> <span class="testonav">Clienti</span>
+					</a>
+						<div class="hidden" id="clientiSubmenu">
+							<ul class="ml-6 space-y-2">
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/cliente/inserisciClienteForm}"> <span
+										class="testosottonav">Inserisci</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/cliente/getListaClienti}"> <span
+										class="testosottonav">Elenco</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"> <span
+										class="testosottonav">Cerca Cliente</span>
+								</a>
+									<form th:action="@{/cliente/cercaCliente}" method="get"
+										class="ml-6 relative">
+										<input type="text" name="query" id="searchInput_navbarCliente"
+											placeholder="Cliente..." class="px-2 py-1 border rounded"
+											oninput="ricercaClienti('navbarCliente')"> <input
+											type="hidden" name="clienteId" id="clienteId_navbarCliente">
+										<div id="suggestionsContainer_navbarCliente"
+											class="absolute z-10 bg-black border rounded shadow-md hidden"></div>
+										<button type="submit"
+											class="px-2 py-1 bg-blue-500 text-white rounded">Cerca</button>
+									</form></li>
+							</ul>
+						</div></li>
+					<li><a class="flex items-center space-x-2 cursor-pointer"
+						onclick="toggleSubmenu('appuntamentiSubmenu')"> <i
+							class="fas fa-calendar-alt"></i> <span class="testonav">Appuntamenti</span>
+					</a>
+						<div class="hidden" id="appuntamentiSubmenu">
+							<ul class="ml-6 space-y-2">
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/appuntamento/inserisciAppuntamentoForm}"> <span
+										class="testosottonav">Inserisci</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/appuntamento/getListaAppuntamenti}"> <span
+										class="testosottonav">Elenco</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"> <span
+										class="testosottonav">Cerca Appuntamento</span>
+								</a>
+									<form th:action="@{/appuntamento/cercaAppuntamento}"
+										method="get" class="ml-6 relative">
+										<input type="text" name="query"
+											id="searchInput_navbarAppuntamento" placeholder="Cliente..."
+											class="px-2 py-1 border rounded"
+											oninput="ricercaClienti('navbarAppuntamento')"> <input
+											type="hidden" name="clienteIdApp"
+											id="clienteId_navbarAppuntamento">
+										<div id="suggestionsContainer_navbarAppuntamento"
+											class="absolute z-10 bg-black border rounded shadow-md hidden"></div>
+										<button type="submit"
+											class="px-2 py-1 bg-blue-500 text-white rounded">Cerca</button>
+									</form></li>
+							</ul>
+						</div></li>
+					<li><a class="flex items-center space-x-2 cursor-pointer"
+						onclick="toggleSubmenu('ricevuteSubmenu')"> <i
+							class="fas fa-receipt"></i> <span class="testonav">Ricevute</span>
+					</a>
+						<div class="hidden" id="ricevuteSubmenu">
+							<ul class="ml-6 space-y-2">
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/ricevuta/inserisciRicevutaForm}"> <span
+										class="testosottonav">Inserisci</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/ricevuta/getListaRicevute}"> <span
+										class="testosottonav">Elenco</span>
+								</a></li>
+								<li><a class="flex items-center space-x-2"> <span
+										class="testosottonav">Cerca Ricevuta</span>
+								</a>
+									<form th:action="@{/ricevuta/cercaRicevuta}" method="get"
+										class="ml-6 relative">
+										<input type="text" name="query"
+											id="searchInput_navbarRicevuta" placeholder="Cliente..."
+											class="px-2 py-1 border rounded"
+											oninput="ricercaClienti('navbarRicevuta')"> <input
+											type="hidden" name="clienteIdRic"
+											id="clienteId_navbarRicevuta">
+										<div id="suggestionsContainer_navbarRicevuta"
+											class="absolute z-10 bg-black border rounded shadow-md hidden"></div>
+										<button type="submit"
+											class="px-2 py-1 bg-blue-500 text-white rounded">Cerca</button>
+									</form></li>
+							</ul>
+						</div></li>
+					<li><a class="flex items-center space-x-2 cursor-pointer"
+						onclick="toggleSubmenu('termometroSubmenu')"> <i
+							class="fas fa-receipt"></i> <span class="testonav">Termometro</span>
+					</a>
+						<div class="hidden" id="termometroSubmenu">
+							<ul class="ml-6 space-y-2">
+								<li><a class="flex items-center space-x-2"
+									th:href="@{/admin/dettagli}"> <span
+										class="testosottonav">Dettagli</span>
+								</a></li>
+
+							</ul>
+						</div></li>
+				</ul>
+			</div>
+		</nav>
+
+		<main class="w-4/5 content">
+			<h1 th:fragment="h1" class="title text-8xl font-bold">IL TUO
+				SALONE</h1>
+			<div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+
+				<div class="calendar-box md:col-span-3 md:row-span-7 h-screen">
+
+					<h2 class="text-4xl font-bold my-4"
+						th:text="${#dates.format(data, 'EEEE, dd MMMM yyyy')}"></h2>
+
+					<table
+						class="table-auto border-collapse border border-gray-400 w-full">
+						<thead>
+							<tr>
+								<th class="border border-gray-400 px-4 py-2">Ora</th>
+								<th class="border border-gray-400 px-4 py-2">Cliente</th>
+								<th class="border border-gray-400 px-4 py-2">Servizi</th>
+								<th class="border border-gray-400 px-4 py-2">Operatore</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Itera sulla mappa per ottenere gli appuntamenti della data odierna -->
+							<tr th:if="${appuntamenti.containsKey(data)}"
+								th:each="appuntamento : ${appuntamenti.get(data)}">
+								<td class="border border-gray-400 px-4 py-2"
+									th:text="${#dates.format(appuntamento.ora, 'HH:mm')}"></td>
+								<td class="border border-gray-400 px-4 py-2"
+									th:text="${appuntamento.cliente.nome + ' ' + appuntamento.cliente.cognome}"></td>
+								<td class="border border-gray-400 px-4 py-2"
+									th:text="${appuntamento.servizi}"></td>
+								<td class="border border-gray-400 px-4 py-2"
+									th:text="${appuntamento.operatore.nome + ' ' + appuntamento.operatore.cognome}"></td>
+							</tr>
+							<tr th:if="${!appuntamenti.containsKey(data)}">
+								<td class="border border-gray-400 px-4 py-2 text-center"
+									colspan="3">Nessun appuntamento presente!!!</td>
+							</tr>
+						</tbody>
+					</table>
+					<br> <a class="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+						th:href="@{/appuntamento/appuntamentiOdierni(data=${data})}">AGGIORNA</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(0), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(0), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(1), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(1), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(2), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(2), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(3), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(3), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(4), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(4), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(5), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(5), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(6), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(6), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(7), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(7), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(8), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(8), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(9), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(9), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(10), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(10), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(11), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(11), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(12), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(12), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(13), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(13), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(14), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(14), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(15), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(15), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(16), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(16), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(17), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(17), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(18), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(18), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(19), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(19), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+				<div class="calendar-box">
+					<h2 class="text-2xl font-bold my-4"
+						th:text="${#dates.format(dateDisponibili.get(20), 'EE, dd MMMM ')}"></h2>
+					<a class="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
+						th:href="@{/aggiornaCalendario(data=${#dates.format(dateDisponibili.get(20), 'yyyy-MM-dd')})}">Apri
+						giorno</a>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="/js/script.js"></script>
+</body>
+</html>
