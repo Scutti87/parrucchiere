@@ -11,3 +11,15 @@ index accessibile senza credenziali
 
 index e funzionalità dopo login admin
 ![index](src/main/resources/static/img/indexAdmin.jpg)
+
+struttura del progetto(Eclipse)
+![index](src/main/resources/static/img/struttura.jpg)
+
+form inserimento/aggiornamento ricevuta
+![index](src/main/resources/static/img/aggiornaRicevuta.jpg)
+
+funzionalità ricerca clienti tramite iniziali nome (JavaScript)
+![index](src/main/resources/static/img/ricercaCliente.jpg)
+
+dettagli andamento dell'attività
+![index](src/main/resources/static/img/temometro.jpg)
