@@ -164,7 +164,7 @@ public class ControllerAdmin {
 			String percentualeFormattata = String.format("%.2f", (double) entry.getValue() / piega * 100);
 			percentualeFormattata = percentualeFormattata.replace(",", "."); // Correctly update the string
 			a.setPercentuale(Double.parseDouble(percentualeFormattata));
-			a.setColore(setColori(a.getNome(), a.getPercentuale()));
+//			a.setColore(setColori(a.getNome(), a.getPercentuale()));
 
 			return a;
 		}).collect(Collectors.toList());
@@ -172,26 +172,26 @@ public class ControllerAdmin {
 		return listaServizi;
 	}
 
-	private String setColori(String servizio, double percentuale) {
-
-		List<String> lista = new ArrayList<String>(List.of("TAGLIO", "COLORE", "SERV.TEC.", "TRATTAM"));
-		Map<String, Double> mappa = new LinkedHashMap<String, Double>();
-		String res = null;
-		mappa.put("TAGLIO", 50.0);
-		mappa.put("COLORE", 30.0);
-		mappa.put("SERV.TEC.", 20.0);
-		mappa.put("TRATTAM", 75.0);
-
-		for (String stringa : lista) {
-			if (stringa.equals(servizio) && percentuale < mappa.get(servizio)) {
-				res = "text-red-500";
-			} else {
-				res = "text-green-500";
-			}
-		}
-
-		return res;
-	}
+//	private String setColori(String servizio, double percentuale) {
+//
+//		List<String> lista = new ArrayList<String>(List.of("TAGLIO", "COLORE", "SERV.TEC.", "TRATTAM"));
+//		Map<String, Double> mappa = new LinkedHashMap<String, Double>();
+//		String res = null;
+//		mappa.put("TAGLIO", 50.0);
+//		mappa.put("COLORE", 30.0);
+//		mappa.put("SERV.TEC.", 20.0);
+//		mappa.put("TRATTAM", 75.0);
+//
+//		for (String stringa : lista) {
+//			if (stringa.equalsIgnoreCase(servizio) && percentuale < mappa.get(servizio)) {
+//				res = "text-red-500";
+//			} else {
+//				res = "text-green-500";
+//			}
+//		}
+//
+//		return res;
+//	}
 
 	@GetMapping("/aggiornaCalendario")
 	public String aggiornaCalendario(Model m, @RequestParam("data") String data) {

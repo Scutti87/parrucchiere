@@ -59,7 +59,12 @@ public class RicevutaStoricoServiceImpl implements IRicevutaStoricoService {
 	@Override
 	public void aggiornaStorico(RicevutaStoricoDto r) {
 
-		r.setId(rr.recuperaUltimoId() + 1);
+		try {
+			r.setId(rr.recuperaUltimoId() + 1);
+		} catch (Exception e) {
+			r.setId(1);
+		}
+		
 		if (rr.findAll().stream().noneMatch(
 				ric -> ric.getCliente().getId() == r.getCliente().getId() && ric.getData().equals(r.getData()))) {
 			rr.aggiornaStorico(r.getId(), r.getData(), r.getTotale(), r.getCliente().getId(), r.getOperatore().getId());
