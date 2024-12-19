@@ -6,4 +6,8 @@ Permette di generare le ricevute direttamente dagli appuntamenti.
 Salvataggio degli appuntamenti e ricevute in storico(tabella seprata).
 Permette di visionare l' andamento dell'attività, previo login, accedendo alle funzionalità admin(NON implementata spring security).
 
+index accessibile senza credenziali
 ![index](src/main/resources/static/img/index.jpg)
+
+index e funzionalità dopo login admin
+![index](src/main/resources/static/img/indexAdmin.jpg)
