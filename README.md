@@ -10,7 +10,7 @@ L'applicazione consente la gestione di un salone di bellezza e offre le seguenti
     Salvataggio degli appuntamenti e delle ricevute in una tabella di storico per una gestione a lungo termine.
     Monitoraggio dell'andamento dell'attività tramite funzionalità amministrative (accessibili dopo il login, sebbene la gestione della sicurezza tramite Spring Security non sia stata implementata).
 
-L'applicazione è stata sviluppata come parte di un progetto pratico durante il corso di Java, e rappresenta il mio primo progetto completo e funzionante. È stata migliorata e aggiornata per incorporare nuove funzionalità, come l'integrazione con JPA per la persistenza dei dati e l'uso di Thymeleaf per la gestione delle interfacce utente.
+L'applicazione è stata sviluppata come parte di un progetto pratico durante il corso di Java, e rappresenta uno dei primi progetti completi e funzionanti. Incoprora funzionalità, come l'integrazione con JPA per la persistenza dei dati e l'uso di Thymeleaf per la gestione delle interfacce utente.
 
 struttura del progetto(Eclipse)
 ![index](src/main/resources/static/img/struttura.jpg)
